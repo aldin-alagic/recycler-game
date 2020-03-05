@@ -6,12 +6,14 @@ public class Truck : MonoBehaviour
     public float speed = 10f;
     public float rotationSpeed = 50f;
 
-
+    private AudioManager audioManager;
     private Transform target;
     private int wavepointIndex = 0;
 
     private void Start()
     {
+        audioManager = AudioManager.instance;
+        audioManager.Play("Driving");
         target = Waypoints.points[0];
     }
 

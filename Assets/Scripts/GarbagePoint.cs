@@ -9,8 +9,11 @@ public class GarbagePoint : MonoBehaviour
     public bool cleared = false;
     public GameObject recycleDialogUI;
 
+    AudioManager audioManager;
+
     void Start()
     {
+        audioManager = AudioManager.instance;
         InvokeRepeating("UpdateTarget", 0f, 0.4f);
     }
 
@@ -20,6 +23,7 @@ public class GarbagePoint : MonoBehaviour
         float distanceGarbageTruck = Vector3.Distance(transform.position, garbageTruck.transform.position);
         if (distanceGarbageTruck <= range && !cleared)
         {
+            audioManager.Play("Door");
             recycleDialogUI.SetActive(true);
             cleared = true;
             Destroy(gameObject, 0.1f);

@@ -16,12 +16,13 @@ public class RecyclerDialog : MonoBehaviour
     public Garbage[] garbages;
     public string titleText = "Znate li reciklirati sljedeći otpad?";
 
+    private AudioManager audioManager;
     private Garbage selectedGarbage;
     private int randomIndex;
 
     private void OnEnable()
     {
-
+        audioManager = AudioManager.instance;
         Pause();
 
         do
@@ -38,6 +39,7 @@ public class RecyclerDialog : MonoBehaviour
 
     public void Pause()
     {
+        audioManager.Stop("Driving");
         Time.timeScale = 0f;
         StartCoroutine(Wait());
     }
@@ -55,6 +57,8 @@ public class RecyclerDialog : MonoBehaviour
         resultTextContainer.GetComponent<UnityEngine.UI.Text>().text = "NETOČNO";
         textContainer.SetActive(true);
         selectedGarbage.cleared = true;
+        audioManager.Play("Incorrect");
+        audioManager.Stop("Correct");
 
         StartCoroutine(WaitForReading());
     }
@@ -66,6 +70,10 @@ public class RecyclerDialog : MonoBehaviour
         resultTextContainer.GetComponent<UnityEngine.UI.Text>().text = "TOČNO";
         textContainer.SetActive(true);
         selectedGarbage.cleared = true;
+        audioManager.Play("Correct");
+        audioManager.Stop("Incorrect");
+
+
 
         StartCoroutine(WaitForReading());
     }
@@ -80,6 +88,7 @@ public class RecyclerDialog : MonoBehaviour
         garbageCanBtns[selectedGarbage.garbageCan].GetComponentInChildren<Button>().onClick.AddListener(WrongAnswer);
         textContainer.SetActive(false);
         UI.SetActive(false);
+        audioManager.Play("Driving");
     }
 
     IEnumerator WaitForReading()
