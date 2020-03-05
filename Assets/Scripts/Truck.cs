@@ -34,7 +34,8 @@ public class Truck : MonoBehaviour
     {
         if (wavepointIndex >= Waypoints.points.Length - 1)
         {
-            Destroy(gameObject);
+            Time.timeScale = 0f;
+            // Destroy(gameObject);
             return;
         }
         wavepointIndex++;
