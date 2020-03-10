@@ -30,10 +30,10 @@ public class RecyclerDialog : MonoBehaviour
                 btn.GetComponentInChildren<Button>().onClick.AddListener(WrongAnswer);
             }
 
+            audioManager = AudioManager.instance;
             firstTime = false;
         }
 
-        audioManager = AudioManager.instance;
         Pause();
 
         do
@@ -72,7 +72,6 @@ public class RecyclerDialog : MonoBehaviour
         selectedGarbage.cleared = true;
         audioManager.Play("Incorrect");
         PlayerStatistics.incorrectAnswers++;
-        Debug.Log("Pogresan");
         StartCoroutine(WaitForReading());
     }
 
@@ -86,7 +85,6 @@ public class RecyclerDialog : MonoBehaviour
         audioManager.Play("Correct");
         PlayerStatistics.correctAnswers++;
         PlayerStatistics.playerScore += 1000;
-        Debug.Log("Tocan");
         StartCoroutine(WaitForReading());
     }
 
@@ -106,7 +104,7 @@ public class RecyclerDialog : MonoBehaviour
 
     IEnumerator WaitForReading()
     {
-        yield return new WaitForSecondsRealtime(1);
+        yield return new WaitForSecondsRealtime(2);
         exitBtn.SetActive(true);
     }
 
